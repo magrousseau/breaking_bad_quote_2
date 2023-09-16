@@ -16,7 +16,7 @@ def quote():
   random_quote = breaking_quote()
   return jsonify({"quote": random_quote})
 
-@application.route('/bug')
+@app.route('/bug')
 def bug():
     return jsonify({"bug" : 1/0})
 
