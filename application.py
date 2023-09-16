@@ -16,6 +16,11 @@ def quote():
   random_quote = breaking_quote()
   return jsonify({"quote": random_quote})
 
+@application.route('/bug')
+def bug():
+    return jsonify({"bug" : 1/0})
+
+
 
 #this part is executed when the module is called directly - "pipenv run python app.py"
 if __name__ == "__main__":
