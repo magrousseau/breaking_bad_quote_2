@@ -26,10 +26,10 @@ variables:
   pythonVersion: '3.7'
 
 stages:
-- stage: Build
-  displayName: Build stage
+- stage: Build_Test
+  displayName: Build and Test stage
   jobs:
-  - job: BuildJob
+  - job: BuildTestJob
     pool:
       vmImage: $(vmImageName)
     steps:
@@ -39,13 +39,14 @@ stages:
       displayName: 'Use Python $(pythonVersion)'
 
     - script: |
-        python -m venv antenv
-        source antenv/bin/activate
         python -m pip install --upgrade pip
-        pip install setup
-        pip install -r requirements.txt
+        pip install pipenv
+        pipenv install --dev
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
+
+    - script: pipenv run nosetests
+      displayName: 'Run Tests'
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
