@@ -7,7 +7,7 @@ app = Flask(__name__)
 #homepage endpoint
 @app.route("/")
 def index():
-    return "<h1> Welcome to Magali's home page </h1>"
+    return "<h1> Welcome to Magali's home page pimped !!  </h1>"
 
 
 #quote endpoint
