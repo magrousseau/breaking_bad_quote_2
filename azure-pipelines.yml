@@ -26,10 +26,10 @@ variables:
   pythonVersion: '3.8'
 
 stages:
-- stage: Build
-  displayName: Build stage
+- stage: Build_Test
+  displayName: Build and Test stage
   jobs:
-  - job: BuildJob
+  - job: BuildTestJob
     pool:
       vmImage: $(vmImageName)
     steps:
@@ -40,9 +40,13 @@ stages:
 
     - script: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install pipenv
+        pipenv install --dev
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
+
+    - script: pipenv run nosetests
+      displayName: 'Run Tests'
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
@@ -59,7 +63,7 @@ stages:
 
 - stage: Deploy
   displayName: 'Deploy Web App'
-  dependsOn: Build
+  dependsOn: Build_Test
   condition: succeeded()
   jobs:
   - deployment: DeploymentJob
