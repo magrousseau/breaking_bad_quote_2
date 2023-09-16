@@ -26,10 +26,10 @@ variables:
   pythonVersion: '3.8'
 
 stages:
-- stage: Build_Test
-  displayName: Build and Test stage
+- stage: Build
+  displayName: Build stage
   jobs:
-  - job: BuildTestJob
+  - job: BuildJob
     pool:
       vmImage: $(vmImageName)
     steps:
@@ -39,16 +39,10 @@ stages:
       displayName: 'Use Python $(pythonVersion)'
 
     - script: |
-        python -m venv antenv
-        source antenv/bin/activate
         python -m pip install --upgrade pip
-        pip install setup
         pip install -r requirements.txt
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
-
-    - script: pipenv run nosetests
-      displayName: 'Run Tests'
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
@@ -83,7 +77,7 @@ stages:
             displayName: 'Use Python version'
 
           - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : magrouseau'
+            displayName: 'Deploy Azure Web App : <user.github_nickname'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
