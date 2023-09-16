@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from quote import breaking_quote
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ app = Flask(__name__)
 #homepage endpoint
 @app.route("/")
 def index():
-    return "<h1> Welcome to Magali's home page pimped !!  </h1>"
+    return render_template('index.html')
 
 
 #quote endpoint
