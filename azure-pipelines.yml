@@ -44,7 +44,7 @@ stages:
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
 
-    - script: pipenv run nosetests
+    - script: nosetests
       displayName: 'Run Tests'
 
     - task: ArchiveFiles@2
